@@ -1,6 +1,6 @@
 set PATH_OGR2OGR=C:\OSGeo4W64\bin\ogr2ogr.exe
 set PATH_GDB=\\abt-sdc\imgenes procesadas\ABT_COBERTURAS\Geodatabase.gdb
-set pghost=localhost
+set pghost=192.168.50.9
 set pgport=5432
 set pgdb=geodatabase
 set pguser=admderechos
