@@ -4,7 +4,7 @@ REM set pghost=192.168.50.9
 set pghost=localhost
 set pgport=5432
 set pgdb=geodatabase
-set pguser=admderechos
+set pguser=<nombre del usuaro>
 REM ******************
 REM * El password para el usuario "pguser" debe configurarse en el archivo .pgpass del sistema.
 REM * On Microsoft Windows the file is named %APPDATA%\postgresql\pgpass.conf (where %APPDATA% refers to the Application Data subdirectory in the user's profile).
