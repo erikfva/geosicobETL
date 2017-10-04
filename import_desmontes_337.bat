@@ -18,5 +18,7 @@ REM ** Eliminando campos innecesarios **
 REM ** Agregando campos del geoSICOB **
 (echo SELECT sicob_add_geoinfo_column('%pgschema%.d337'^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
 (echo SELECT sicob_update_geoinfo_column('%pgschema%.d337'^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-REM ** Eliminando polígonos con geometrías vacias **
+REM ** Eliminando polï¿½gonos con geometrï¿½as vacias **
 REM (echo DELETE FROM %pgschema%.d337 WHERE sicob_sup IS NULL;) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
+REM ** Adicionando indice**
+(echo CREATE INDEX d337_idx_codigo ON %pgschema%.d337 USING btree (codigo^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
