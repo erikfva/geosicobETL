@@ -22,7 +22,7 @@ set Zona21=%lyrname%
 set lyrname=parcelas_tituladas
 set pgschema=temp
 
-set sql=SELECT numerodocu AS titulo, fechadocum AS fecha_titulo, parcela AS predio, nombreplan AS propietario, clasificac AS tipo_propiedad, sup_cc, superficie AS sup_predio, clasetitul, calificaci, (parcela+nombreplan) AS infopredio
+set sql=SELECT num_doc AS titulo, fec_tit AS fecha_titulo, nom_pre AS predio, nom_tit AS propietario, clasifi AS tipo_propiedad, sup_cc, sup_pre AS sup_predio, clase_tit, califi, (nom_pre+nom_tit) AS infopredio
 %PATH_OGR2OGR% -f "PostgreSQL" PG:"host=%pghost% user=%pguser% port=%pgport% dbname=%pgdb% ACTIVE_SCHEMA=%pgschema%" "%PATH_GDB%" -lco GEOMETRY_NAME=%pggeom% -lco FID=sicob_id -overwrite -progress --config PG_USE_COPY YES -nln %lyrname% -sql "%sql% FROM %Zona21%"
 %PATH_OGR2OGR% -f "PostgreSQL" PG:"host=%pghost% user=%pguser% port=%pgport% dbname=%pgdb% ACTIVE_SCHEMA=%pgschema%" "%PATH_GDB%" -lco GEOMETRY_NAME=%pggeom% -append -progress --config PG_USE_COPY YES -nln %lyrname% -sql "%sql% FROM %Zona20%"
 %PATH_OGR2OGR% -f "PostgreSQL" PG:"host=%pghost% user=%pguser% port=%pgport% dbname=%pgdb% ACTIVE_SCHEMA=%pgschema%" "%PATH_GDB%" -lco GEOMETRY_NAME=%pggeom% -append -progress --config PG_USE_COPY YES -nln %lyrname% -sql "%sql% FROM %Zona19%"
