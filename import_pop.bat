@@ -7,19 +7,9 @@ REM ****************************************************************************
 set lyrsearch=B0603202_POP_
 set lyrname=
 call dosearch.bat
+set newlyrname=pop
+call import.bat
 
-%PATH_OGR2OGR% -f "PostgreSQL" PG:"host=%pghost% user=%pguser% port=%pgport% dbname=%pgdb% ACTIVE_SCHEMA=%pgschema%" "%PATH_GDB%" -lco GEOMETRY_NAME=%pggeom% -lco FID=sicob_id -overwrite -progress --config PG_USE_COPY YES -nln pop %lyrname%
-REM ** Eliminando campos innecesarios **
-(echo ALTER TABLE %pgschema%.pop DROP COLUMN IF EXISTS objectid) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-(echo ALTER TABLE %pgschema%.pop DROP COLUMN IF EXISTS objectid_1) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-(echo ALTER TABLE %pgschema%.pop DROP COLUMN IF EXISTS objectid_12) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-(echo ALTER TABLE %pgschema%.pop DROP COLUMN IF EXISTS shape_area) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-(echo ALTER TABLE %pgschema%.pop DROP COLUMN IF EXISTS shape_length) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-REM ** Agregando campos del geoSICOB **
-(echo SELECT sicob_add_geoinfo_column('%pgschema%.pop'^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-(echo SELECT sicob_update_geoinfo_column('%pgschema%.pop'^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-REM ** Eliminando polígonos con geometrías vacias **
-(echo DELETE FROM %pgschema%.pop WHERE sicob_sup IS NULL;) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
 REM ** Adicionando índices **
 (echo CREATE INDEX pop_idx_res_adm ON %pgschema%.pop USING btree (res_adm^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
 (echo CREATE INDEX pop_idx_est ON %pgschema%.pop USING btree (est^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
