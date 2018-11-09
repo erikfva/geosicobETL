@@ -6,6 +6,7 @@ REM ****************************************************************************
 
 set fsource=e:\geosicobdb\referenciales.backup
 pg_restore -h %pghost% -p %pgport% -U %pguser% -d "%pgdb%" -c -x -O -v "%fsource%" 
+psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb% -f parcelas_referenciales.sql
 
 set fsource=e:\geosicobdb\predios_referenciales.backup
 pg_restore -h %pghost% -p %pgport% -U %pguser% -d "%pgdb%" -c -x -O -v "%fsource%" 

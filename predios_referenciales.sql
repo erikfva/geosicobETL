@@ -1,17 +1,3 @@
--->1.	CREANDO ÍNDICE EN PARCELAS REFERENCIALES
-ALTER TABLE coberturas.predios_proceso_geosicob_geo_201607  ADD COLUMN tsv tsvector;
-CREATE INDEX tsv_idx ON coberturas.predios_proceso_geosicob_geo_201607  USING gin(tsv);
-UPDATE coberturas.predios_proceso_geosicob_geo_201607  SET tsv = setweight(to_tsvector(nompred), 'A') || setweight(to_tsvector(coalesce(beneficiar,'')), 'D');
-DELETE from coberturas.predios_proceso_geosicob_geo_201607  
-where 
-tsv @@ to_tsquery('TIERRA & FISCAL');
---T: 2min
-
--->Agregando campos del geoSICOB
-SELECT sicob_add_geoinfo_column('coberturas.predios_proceso_geosicob_geo_201607');
-SELECT sicob_update_geoinfo_column('coberturas.predios_proceso_geosicob_geo_201607');
---T: 4:30min
-
 -->2.	GENERANDO LOS POLIGONOS DE PREDIOS REFERENCIALES AGRUPADOS POR NOMBRE DE PROPIEDAD+PROPIETARIO
 DROP TABLE IF EXISTS coberturas.predios_referenciales;
 create table coberturas.predios_referenciales as
@@ -21,7 +7,7 @@ FROM
 GROUP BY nompred || beneficiar, nompred, beneficiar, source;
 --T : 3:44 min
 
--->** Adicionando índices **
+-->** Adicionando ï¿½ndices **
 ALTER TABLE coberturas.predios_referenciales  ADD COLUMN tsv tsvector;
 UPDATE coberturas.predios_referenciales SET tsv = setweight(to_tsvector(predio), 'A') || setweight(to_tsvector(coalesce(propietario,'')), 'D');
 CREATE INDEX predios_referenciales_tsv_idx ON coberturas.predios_referenciales USING gin(tsv);
@@ -52,7 +38,7 @@ where a.sicob_id = b.sicob_id
 --T: 1:27 min
 
 --5.	VERIFICANDO QUE TODAS LAS GEOMETRIAS SEAN VALIDAS
---Repetir el punto 3, y después verificar que no existan registros en la tabla de errores.
+--Repetir el punto 3, y despuï¿½s verificar que no existan registros en la tabla de errores.
 --select * from temp.predios_referenciales_to_fix;
 
 --6.	ASIGNANDO LOS IDPREDIOS EN LA TABLA DE PARCELAS
@@ -73,9 +59,9 @@ idpredio is null
 --TODO: Crear una llave en la capa predios_proceso_geosicob_geo_201607 con el nombrepredio+nombreparcela 
 -- que sirva como referencia para la asignacion y evitar la asignacion por analisis espacial.
 
---> Verificando que no hay errores en la asignación de idpredios:
+--> Verificando que no hay errores en la asignaciï¿½n de idpredios:
 /*
--->a)	Que no existan polígonos sin asignar:
+-->a)	Que no existan polï¿½gonos sin asignar:
 SELECT * FROM coberturas.predios_proceso_geosicob_geo_201607 WHERE idpredio IS NULL limit 1;
 
 -->b)	Que el nombre de predio asignado sea el mismo de la parcela:
