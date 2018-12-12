@@ -12,7 +12,7 @@ DROP TABLE temp.parcelas_tituladas CASCADE;
 /** Corrigiendo errores **/
 UPDATE coberturas.parcelas_tituladas SET the_geom = ST_Multi(ST_CollectionExtract(st_makevalid(the_geom),3)) WHERE st_isvalid(the_geom) = 'f';
 
--->** Adicionando índices **
+-->** Adicionando ï¿½ndices **
 DROP INDEX IF EXISTS  coberturas.parcelas_tituladas_idx_idpredio;
 CREATE INDEX parcelas_tituladas_idx_idpredio ON coberturas.parcelas_tituladas USING btree (idpredio);
 DROP INDEX IF EXISTS coberturas.parcelas_tituladas_idx_titulo;
@@ -33,20 +33,20 @@ ALTER TABLE coberturas.parcelas_tituladas ADD PRIMARY KEY (sicob_id);
 DROP TABLE IF EXISTS coberturas.predios_titulados;
 create table coberturas.predios_titulados as
 SELECT row_number() over() AS sicob_id, idpredio,predio, propietario, string_agg(titulo , ',') as titulo, 
-	string_agg(fecha_titulo , ',') as fecha_titulo, string_agg(clasetitul , ',') as clasetitul, min(calificaci) as calificaci, 
+	string_agg(fecha_titulo , ',') as fecha_titulo, 
 	min(tipo_propiedad) as tipo_propiedad, max(sup_predio) as sup_predio, max(parcelas) as parcelas,
 	(SELECT ST_Multi(ST_CollectionExtract(st_collect(the_geom),3)) as the_geom 
 		FROM coberturas.parcelas_tituladas u WHERE u.idpredio =t.idpredio
 	) AS the_geom
 FROM (
-	SELECT DISTINCT ON (idpredio,titulo)
-	idpredio ,predio, propietario, titulo, to_char(fecha_titulo,'DD/MM/YYYY') AS fecha_titulo, clasetitul, calificaci, tipo_propiedad, sup_predio,parcelas
+	SELECT DISTINCT ON (idpredio, titulo)
+	idpredio, predio, propietario, titulo, to_char(fecha_titulo,'DD/MM/YYYY') AS fecha_titulo, tipo_propiedad, sup_predio,parcelas
 	FROM coberturas.parcelas_tituladas 
 	order by idpredio,titulo
 ) t
 GROUP BY t.idpredio,t.predio,t.propietario;
 
--->** Adicionando índices **
+-->** Adicionando ï¿½ndices **
 CREATE INDEX predios_titulados_idx_idpredio ON coberturas.predios_titulados USING btree (idpredio);
 CREATE INDEX predios_titulados_idx_titulo ON coberturas.predios_titulados USING btree (titulo);
 CREATE INDEX predios_titulados_idx_predio ON coberturas.predios_titulados USING btree (predio);

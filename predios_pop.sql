@@ -51,13 +51,12 @@ predios_pop_uso AS (
         ELSE
         	info.fec_res
         END AS fec_res,
-        info.nom_pre, info.cod_gen, 
 		CASE WHEN COALESCE(TRIM(info.nom_pro),'') = '' THEN 
  			NULL
 		ELSE
   			nom_pro
   		END AS nom_pro,
-        info.nom_aux, info.nom_rep, info.dep, info.pro, info.mun, info.zon_utm, info.ges, info.sup_pre, info.est, info.obs, a.the_geom
+        info.nom_aux, info.nom_rep, info.dep, info.prov, info.mun, info.zon_utm, info.ges, info.sup_pre, info.est_der, info.obs, a.the_geom
         FROM
         dissolve_area a INNER JOIN coberturas.pop_uso_vigente info ON ( a.idref = info.sicob_id)
 ),
@@ -74,22 +73,20 @@ pop_faltante AS (
      b.res_adm IS NULL
 ),
 predios_pop AS (
-    SELECT res_adm, fec_res, nom_pre, cod_gen, nom_pro, nom_aux, nom_rep, dep, pro, mun, zon_utm, ges,
-     sup_pre, est, obs, the_geom, 'coberturas.pop_uso_vigente' AS source FROM predios_pop_uso 
+    SELECT res_adm, fec_res, nom_pro, nom_aux, nom_rep, dep, prov, mun, zon_utm, ges,
+     sup_pre, est_der, obs, the_geom, 'coberturas.pop_uso_vigente' AS source FROM predios_pop_uso 
     UNION ALL
     SELECT 
-     res_adm, fec_res, nom_pre, cod_gen, nom_pro, nom_aux, nom_rep, dep, pro, mun, zon_utm, ges,
-     sup_pre, est, obs, the_geom, 'coberturas.pop_vigente' AS source
+     res_adm, fec_res,  nom_pro, nom_aux, nom_rep, dep, prov, mun, zon_utm, ges,
+     sup_pre, est_der, obs, the_geom, 'coberturas.pop_vigente' AS source
     FROM
       pop_faltante
 )
 SELECT * FROM 
 predios_pop;
--->Adicionando índices
+-->Adicionando ï¿½ndices
 CREATE INDEX predios_pop_idx_res_adm ON coberturas.predios_pop
   USING btree (res_adm COLLATE pg_catalog."default");
-CREATE INDEX predios_pop_idx_nom_pre ON coberturas.predios_pop
-  USING btree (nom_pre COLLATE pg_catalog."default");
 CREATE INDEX predios_pop_idx_nom_pro ON coberturas.predios_pop
   USING btree (nom_pro COLLATE pg_catalog."default");
 CREATE INDEX predios_pop_the_geom_geom_idx ON coberturas.predios_pop
@@ -98,7 +95,7 @@ CREATE INDEX predios_pop_the_geom_geom_idx ON coberturas.predios_pop
 SELECT sicob_create_id_column('coberturas.predios_pop');
 SELECT sicob_add_geoinfo_column('coberturas.predios_pop');
 SELECT sicob_update_geoinfo_column('coberturas.predios_pop');
--->Filtrando y eliminando los POP actualizados (deberían estar NO VIGENTES)
+-->Filtrando y eliminando los POP actualizados (deberï¿½an estar NO VIGENTES)
 DELETE FROM coberturas.predios_pop
 WHERE sicob_id IN (
     SELECT
@@ -117,7 +114,7 @@ WHERE sicob_id IN (
 UPDATE coberturas.predios_pop
 SET fec_res = t.fec_res, nom_pro = t.nom_pro
 FROM (
-  SELECT pp.sicob_id, pv.nom_pre, pv.fec_res, pv.nom_pro FROM
+  SELECT pp.sicob_id, pv.fec_res, pv.nom_pro FROM
   coberturas.predios_pop pp 
   INNER JOIN coberturas.pop_vigente pv ON (
       pp.res_adm = pv.res_adm

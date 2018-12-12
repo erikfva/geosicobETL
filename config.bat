@@ -1,5 +1,5 @@
 set PATH_OGR2OGR=C:\Program" Files"\"QGIS 3.2"\bin\
-set PATH_GDB=F:\ASIG\coberturas\Geodatabase.gdb
+set PATH_GDB=F:\Geodatabase.gdb
 set pghost=localhost
 set pgport=5432
 set pgdb=geodatabase
@@ -13,4 +13,6 @@ set pgschema=coberturas
 set pgsrid=3003
 set pggeom=the_geom
 REM set pgencoding="UTF-8"
+REM setx GDAL_DATA "C:\Program Files\QGIS 3.2\share\epsg_csv"
 SETLOCAL ENABLEEXTENSIONS EnableDelayedExpansion
+

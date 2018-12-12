@@ -1,11 +1,10 @@
 @echo off
 call config.bat
+call layers.bat
 REM ********************************************************************************
 REM **Importando Reservas Privada de Patrimonio  Natural (RPPN) de la cobertura de la geodatabase UMIG ABT**
 REM ********************************************************************************
 
-set lyrsearch=B0603204_RPPN_
-set lyrname=
-call dosearch.bat
+set lyrname=%lyr_rppn%
 set newlyrname=rppn
 call import.bat
