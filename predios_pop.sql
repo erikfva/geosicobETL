@@ -51,6 +51,7 @@ predios_pop_uso AS (
         ELSE
         	info.fec_res
         END AS fec_res,
+        info.raz_soc,
 		CASE WHEN COALESCE(TRIM(info.nom_pro),'') = '' THEN 
  			NULL
 		ELSE
@@ -73,20 +74,22 @@ pop_faltante AS (
      b.res_adm IS NULL
 ),
 predios_pop AS (
-    SELECT res_adm, fec_res, nom_pro, nom_aux, nom_rep, dep, prov, mun, zon_utm, ges,
+    SELECT res_adm, fec_res, raz_soc, nom_pro, nom_aux, nom_rep, dep, prov, mun, zon_utm, ges,
      sup_pre, est_der, obs, the_geom, 'coberturas.pop_uso_vigente' AS source FROM predios_pop_uso 
     UNION ALL
     SELECT 
-     res_adm, fec_res,  nom_pro, nom_aux, nom_rep, dep, prov, mun, zon_utm, ges,
+     res_adm, fec_res,  raz_soc, nom_pro, nom_aux, nom_rep, dep, prov, mun, zon_utm, ges,
      sup_pre, est_der, obs, the_geom, 'coberturas.pop_vigente' AS source
     FROM
       pop_faltante
 )
 SELECT * FROM 
 predios_pop;
--->Adicionando �ndices
+-->Adicionando indices
 CREATE INDEX predios_pop_idx_res_adm ON coberturas.predios_pop
   USING btree (res_adm COLLATE pg_catalog."default");
+CREATE INDEX predios_pop_idx_raz_soc ON coberturas.predios_pop
+  USING btree (raz_soc COLLATE pg_catalog."default");
 CREATE INDEX predios_pop_idx_nom_pro ON coberturas.predios_pop
   USING btree (nom_pro COLLATE pg_catalog."default");
 CREATE INDEX predios_pop_the_geom_geom_idx ON coberturas.predios_pop
