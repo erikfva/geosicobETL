@@ -26,3 +26,4 @@ set lyr_poaf=_06030206_POAF
 set lyr_rf=_06030843_MDSP_RESERVAS_FORESTALES
 set lyr_rppn=_06030205_RPPN
 set lyr_tpfp=_06030841_MDSP_TPFP
+set lyr_pgibt=_06030204_PGIBT
