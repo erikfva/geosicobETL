@@ -12,5 +12,5 @@ REM ** Corrigiendo errores **
 REM ** Agregando campos del geoSICOB **
 (echo SELECT sicob_add_geoinfo_column('%pgschema%.%newlyrname%'^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
 (echo SELECT sicob_update_geoinfo_column('%pgschema%.%newlyrname%'^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-REM ** Eliminando pol�gonos con geometr�as vacias **
+REM ** Eliminando poligonos con geometrias vacias **
 (echo DELETE FROM %pgschema%.%newlyrname% WHERE sicob_sup IS NULL;) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
