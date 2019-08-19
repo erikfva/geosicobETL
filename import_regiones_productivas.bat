@@ -5,7 +5,7 @@ REM ****************************************************************************
 REM **Importando Regiones Productivas para calculo de volumenes maximos**
 REM ********************************************************************************
 
-set newlyrname=zonas_productivas
+set newlyrname=regiones_productivas
 set PATH_SHP=D:\shapes\ECOREGIONES_PDM.shp
 
 %PATH_OGR2OGR%ogr2ogr -f "PostgreSQL" PG:"host=%pghost% user=%pguser% port=%pgport% dbname=%pgdb% ACTIVE_SCHEMA=%pgschema%" "%PATH_SHP%" -lco GEOMETRY_NAME=%pggeom% -nlt POLYGON -lco FID=sicob_id -overwrite -progress --config PG_USE_COPY YES -nln %newlyrname%
