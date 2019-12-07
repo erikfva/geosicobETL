@@ -87,7 +87,7 @@ OR trim(COALESCE(coberturas.plus_cbba.cat_uso,'')) <> ''
 -->Adicionando indices
 CREATE INDEX plus_the_geom_idx ON coberturas.plus USING gist (the_geom);
 
--->Agregando campos del geoSICOB
-SELECT sicob_create_id_column('coberturas.plus');
-SELECT sicob_add_geoinfo_column('coberturas.plus');
-SELECT sicob_update_geoinfo_column('coberturas.plus');
+-->Agregando campos de geovision
+SELECT gv_create_id_column('coberturas.plus');
+SELECT gv_add_geoinfo_column('coberturas.plus');
+SELECT gv_update_geoinfo_column('coberturas.plus');

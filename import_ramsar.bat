@@ -10,5 +10,5 @@ set newlyrname=ramsar
 call import.bat
 
 REM ** Adicionando indices **
-(echo CREATE INDEX %newlyrname%_idx_cod_srm ON %pgschema%.%newlyrname% USING btree (cod_srm^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-(echo CREATE INDEX %newlyrname%_idx_nom_srm ON %pgschema%.%newlyrname% USING btree (nom_srm^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
+psql -h %pghost% -p %pgport% -c "CREATE INDEX %newlyrname%_idx_cod_srm ON %pgschema%.%newlyrname% USING btree (cod_srm);" postgresql://%pguser%:%pgpass%@%pghost%/%pgdb%
+psql -h %pghost% -p %pgport% -c "CREATE INDEX %newlyrname%_idx_nom_srm ON %pgschema%.%newlyrname% USING btree (nom_srm);" postgresql://%pguser%:%pgpass%@%pghost%/%pgdb%

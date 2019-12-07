@@ -9,7 +9,7 @@ DROP TABLE IF EXISTS coberturas.selpas CASCADE;
 DROP TABLE IF EXISTS coberturas.seltpfp CASCADE;
 DROP TABLE IF EXISTS coberturas.seltum CASCADE;
 -->Agregando campos del geoSICOB
-SELECT sicob_create_id_column('coberturas.sel');
+SELECT gv_create_id_column('coberturas.sel');
 -->Adicionando indices
 CREATE INDEX sel_the_geom_geom_idx ON coberturas.sel
   USING gist (the_geom public.gist_geometry_ops_2d);

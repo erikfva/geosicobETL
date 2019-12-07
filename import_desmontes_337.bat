@@ -13,6 +13,7 @@ set newlyrname=d337
 call import.bat
 
 REM ** Adicionando indice**
-(echo CREATE INDEX %newlyrname%_idx_codigo ON %pgschema%.%newlyrname% USING btree (cod_pre^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
+REM (echo CREATE INDEX %newlyrname%_idx_codigo ON %pgschema%.%newlyrname% USING btree (cod_pre^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
+psql -h %pghost% -p %pgport% -c "CREATE INDEX %newlyrname%_idx_codigo ON %pgschema%.%newlyrname% USING btree (cod_pre);" postgresql://%pguser%:%pgpass%@%pghost%/%pgdb%
 
 :EOF

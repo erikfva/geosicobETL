@@ -4,7 +4,7 @@ CREATE TABLE coberturas.predios_pop AS
 WITH
 grouppolygons AS (
 	SELECT
-    	res_adm, min(sicob_id) as idref,
+    	res_adm, min(gv_id) as idref,
     	st_multi(
     		st_union(
     			the_geom                
@@ -59,7 +59,7 @@ predios_pop_uso AS (
   		END AS nom_pro,
         info.nom_aux, info.nom_rep, info.dep, info.prov, info.mun, info.zon_utm, info.ges, info.sup_pre, info.est_der, info.obs, a.the_geom
         FROM
-        dissolve_area a INNER JOIN coberturas.pop_uso_vigente info ON ( a.idref = info.sicob_id)
+        dissolve_area a INNER JOIN coberturas.pop_uso_vigente info ON ( a.idref = info.gv_id)
 ),
 pop_faltante AS (
     SELECT 
@@ -94,19 +94,19 @@ CREATE INDEX predios_pop_idx_nom_pro ON coberturas.predios_pop
   USING btree (nom_pro COLLATE pg_catalog."default");
 CREATE INDEX predios_pop_the_geom_geom_idx ON coberturas.predios_pop
   USING gist (the_geom public.gist_geometry_ops_2d);
--->Agregando campos del geoSICOB
-SELECT sicob_create_id_column('coberturas.predios_pop');
-SELECT sicob_add_geoinfo_column('coberturas.predios_pop');
-SELECT sicob_update_geoinfo_column('coberturas.predios_pop');
+-->Agregando campos del geogv
+SELECT gv_create_id_column('coberturas.predios_pop');
+SELECT gv_add_geoinfo_column('coberturas.predios_pop');
+SELECT gv_update_geoinfo_column('coberturas.predios_pop');
 -->Filtrando y eliminando los POP actualizados (deber�an estar NO VIGENTES)
 DELETE FROM coberturas.predios_pop
-WHERE sicob_id IN (
+WHERE gv_id IN (
     SELECT
-     a.sicob_id
+     a.gv_id
     FROM
     coberturas.predios_pop a INNER JOIN 
     coberturas.predios_pop b ON (
-        a.sicob_id <> b.sicob_id AND
+        a.gv_id <> b.gv_id AND
         a.ges < b.ges AND
         ST_Intersects(a.the_geom,b.the_geom) AND 
         st_area(  ST_Intersection(st_makevalid(a.the_geom),st_makevalid(b.the_geom) )  ) > 
@@ -117,7 +117,7 @@ WHERE sicob_id IN (
 UPDATE coberturas.predios_pop
 SET fec_res = t.fec_res, nom_pro = t.nom_pro
 FROM (
-  SELECT pp.sicob_id, pv.fec_res, pv.nom_pro FROM
+  SELECT pp.gv_id, pv.fec_res, pv.nom_pro FROM
   coberturas.predios_pop pp 
   INNER JOIN coberturas.pop_vigente pv ON (
       pp.res_adm = pv.res_adm
@@ -128,4 +128,4 @@ FROM (
   pp.nom_pro IS NULL
 ) t
 WHERE
-coberturas.predios_pop.sicob_id = t.sicob_id;
+coberturas.predios_pop.gv_id = t.gv_id;

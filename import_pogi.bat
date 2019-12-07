@@ -10,5 +10,5 @@ set newlyrname=pogi
 call import.bat
 
 REM ** Adicionando indices **
-(echo CREATE INDEX %newlyrname%_idx_res_adm ON %pgschema%.%newlyrname% USING btree (res_adm^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
-(echo CREATE INDEX %newlyrname%_idx_usos ON %pgschema%.%newlyrname% USING btree (usos_prop^^^);) | psql -h %pghost% -p %pgport% -U %pguser% -d %pgdb%
+psql -h %pghost% -p %pgport% -c "CREATE INDEX %newlyrname%_idx_res_adm ON %pgschema%.%newlyrname% USING btree (res_adm);" postgresql://%pguser%:%pgpass%@%pghost%/%pgdb%
+psql -h %pghost% -p %pgport% -c "CREATE INDEX %newlyrname%_idx_usos ON %pgschema%.%newlyrname% USING btree (usos_prop);" postgresql://%pguser%:%pgpass%@%pghost%/%pgdb%
