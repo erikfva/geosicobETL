@@ -1,11 +1,13 @@
 set PATH_OGR2OGR=C:\Program" Files"\"QGIS 3.11"\bin\
 REM set PATH_OGR2OGR=E:\PostgreSQL\12\bin\
-set PATH_GDB="J:\Abt 2019\Geodatabase.gdb"
+set PATH_GDB="J:\GDB_ABT_28-10-2020\Geodatabase.gdb"
 set pghost=localhost
-set pgport=5433
-set pgdb=geovision
-set pguser=geovision
-set pgpass=Geo2019*
+set pgport=5432
+set pgdb=geosicob
+set pguser=admderechos
+set pgpass=Geo2020*
+REM set fnPrefix=gv
+set fnPrefix=sicob
 REM ******************
 REM * El password para el usuario "pguser" debe configurarse en el archivo .pgpass del sistema.
 REM * On Microsoft Windows the file is named %APPDATA%\postgresql\pgpass.conf (where %APPDATA% refers to the Application Data subdirectory in the user's profile).

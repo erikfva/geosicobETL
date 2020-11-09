@@ -3,8 +3,6 @@
 ## Scripts para importar las coberturas desde la personal geodatabase GDB hacia PostGIS.
 
 Edite el archivo **_config.bat_** y configure los parámetros de conexión a la base de datos PostgreSQL y el archivo .GDB de base de dtos personal de ESRI.
-El primer script que se debe ejecutar es **layerlist.bat** que genera el listado de las capas de la base de datos GDB,
-gabando el resultado en el archivo **layerlist.txt**.
 
 ## Importando las capas
 
@@ -16,7 +14,7 @@ Primero debe descargar los archivos:
 1. https://drive.google.com/file/d/1uR0y6WVzchjzyQifKpn9yvZnXWhJKi6k/view?usp=sharing
 2. https://drive.google.com/file/d/1L15fUvScJkSJrumT3kjulOWZksPV0E16/view?usp=sharing
 
-luego edite el archivo **import_referenciales.bat** y configure la ubicación de los archivos descargados, despeues ejecute el archivo.
+luego edite el archivo **import_referenciales.bat** y configure la ubicación de los archivos descargados, luego ejecute el archivo.
 
 ### Importando capas UMIG
 

@@ -5,8 +5,8 @@ REM ****************************************************************************
 REM **Importando rredios referenciales mediante restauracion de archivos .backup **
 REM ********************************************************************************
 
-set predios_proceso=E:\geosicobdb\predios_proceso_geosicob_geo_201607.backup
-set predios_referenciales=E:\geosicobdb\predios_referenciales.backup
+set predios_proceso=predios_proceso_geosicob_geo_201607.backup
+set predios_referenciales=predios_referenciales.backup
 
 pg_restore -h %pghost% -p %pgport% -U %pguser% -d "%pgdb%" -c -x -O -v "%predios_proceso%"
 pg_restore -h %pghost% -p %pgport% -U %pguser% -d "%pgdb%" -c -x -O -v "%predios_referenciales%"
