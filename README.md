@@ -1,6 +1,7 @@
 # geosicobETL
 
 ## Scripts para importar las coberturas desde la personal geodatabase GDB hacia PostGIS.
+![drawing](https://docs.google.com/drawings/d/1K83FFj45Nvs3X6xo_pj4DwLWPgffe28jAklbAdMCrD4/export/png)
 
 Edite el archivo **_config.bat_** y configure los parámetros de conexión a la base de datos PostgreSQL y el archivo .GDB de base de dtos personal de ESRI.
 
